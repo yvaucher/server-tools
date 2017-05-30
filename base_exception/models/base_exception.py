@@ -141,8 +141,9 @@ class BaseException(models.AbstractModel):
         exception_obj = self.env['exception.rule']
         model_exceptions = exception_obj.sudo().search(
             [('model', '=', self._name)])
+        rule_group = self[0].rule_group if self else False
         sub_exceptions = exception_obj.sudo().search(
-            [('rule_group', '=', self.rule_group),
+            [('rule_group', '=', rule_group),
              ('id', 'not in', model_exceptions.ids),
              ])
 
